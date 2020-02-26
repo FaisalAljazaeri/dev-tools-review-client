@@ -8,6 +8,8 @@ class App extends Component {
     constructor(props) {
         super(props);
 
+        this.apiUrl = "https://sheltered-coast-79974.herokuapp.com";
+
         this.state = {
             reviews: []
         };
@@ -16,7 +18,7 @@ class App extends Component {
     // Function to add a new Review to the list
     addReview = review => {
         axios
-            .post("http://localhost:5000/api/reviews", review)
+            .post(`${this.apiUrl}/api/reviews`, review)
             .then(res => {
                 this.setState({
                     reviews: [...this.state.reviews, res.data.review]
@@ -45,7 +47,7 @@ class App extends Component {
     // Make a PATCH call to the server with an updated review and change the state to reflect changes
     updateReview = updatedReview => {
         axios
-            .patch(`http://localhost:5000/api/reviews/${updatedReview._id}`, {
+            .patch(`${this.apiUrl}/api/reviews/${updatedReview._id}`, {
                 review: updatedReview
             })
             .then(res => {
@@ -66,7 +68,7 @@ class App extends Component {
     // Function that makes a DELETE request to the server to delete all Reviews from DB
     deleteAllReviews = () => {
         axios
-            .delete("http://localhost:5000/api/reviews")
+            .delete(`${this.apiUrl}/api/reviews`)
             .then(res => {
                 this.setState({
                     reviews: res.data
@@ -78,7 +80,7 @@ class App extends Component {
     // Function that makes a DELETE request to the server to delete all Reviews that aren't recommended from DB
     deleteNotRecommendedReviews = () => {
         axios
-            .delete("http://localhost:5000/api/reviews/notrecommended")
+            .delete(`${this.apiUrl}/api/reviews/notrecommended`)
             .then(res => {
                 this.setState({
                     reviews: res.data
@@ -89,17 +91,15 @@ class App extends Component {
 
     // Function to delete a specific Review by id
     deleteReview = reviewId => {
-        axios
-            .delete(`http://localhost:5000/api/reviews/${reviewId}`)
-            .then(res => {
-                const newReviews = [...this.state.reviews].filter(
-                    review => reviewId !== review._id
-                );
+        axios.delete(`${this.apiUrl}/api/reviews/${reviewId}`).then(res => {
+            const newReviews = [...this.state.reviews].filter(
+                review => reviewId !== review._id
+            );
 
-                this.setState({
-                    reviews: newReviews
-                });
+            this.setState({
+                reviews: newReviews
             });
+        });
     };
 
     render() {
@@ -130,7 +130,7 @@ class App extends Component {
     // MAKE a GET request to the server to retrieve all Reviews from the Database and populate the state
     componentDidMount() {
         axios
-            .get("http://localhost:5000/api/reviews")
+            .get(`${this.apiUrl}/api/reviews`)
             .then(res => {
                 this.setState({
                     reviews: res.data
