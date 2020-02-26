@@ -1,0 +1,26 @@
+#action-btn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 15px;
+    color: #53565e;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-buttons button {
+    margin: 5px;
+    width: 90%;
+}
+
+@media (max-width: 600px) {
+    #action-btn {
+        top: 0;
+        right: 0;
+        margin: 5px;
+    }
+}
